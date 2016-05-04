@@ -7,25 +7,25 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * Created by Abhilash on 03/05/2016.
  */
 
-@JsonPropertyOrder({ "currentGrid", "isSolved" })
+@JsonPropertyOrder({ "currentMatrix", "isSolved" })
 public class BaseResponse {
 
-    protected int[][] currentGrid;
+    protected int[][] currentMatrix;
     protected boolean isSolved;
 
-    public BaseResponse(int[][] currentGrid, boolean isSolved) {
-        this.currentGrid = currentGrid;
+    public BaseResponse(int[][] currentMatrix, boolean isSolved) {
+        this.currentMatrix = currentMatrix;
         this.isSolved = isSolved;
     }
 
-    @JsonProperty("currentGrid")
-    public int[][] getGrid() {
-        return currentGrid;
+    @JsonProperty("currentMatrix")
+    public int[][] getMatrix() {
+        return currentMatrix;
     }
 
-    @JsonProperty("currentGrid")
-    public void setGrid(int[][] currentGrid) {
-        this.currentGrid = currentGrid;
+    @JsonProperty("currentMatrix")
+    public void setMatrix(int[][] currentMatrix) {
+        this.currentMatrix = currentMatrix;
     }
 
     @JsonProperty("isSolved")

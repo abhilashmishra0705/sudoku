@@ -6,36 +6,36 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 /**
  * Created by Abhilash on 03/05/2016.
  */
-@JsonPropertyOrder({ "currentGrid", "isSolved", "isValidCandidate", "isPossibleSolution" })
+@JsonPropertyOrder({ "currentMatrix", "isSolved", "isValid", "isPossibleValue" })
 public class SudokuResponse extends BaseResponse {
 
-    private boolean isValidCandidate;
-    private boolean isPossibleSolution;
+    private boolean isValid;
+    private boolean isPossibleValue;
 
-    public SudokuResponse(int[][] currentGrid, boolean isSolved, boolean isValidCandidate, boolean isPossibleSolution) {
-        super(currentGrid, isSolved);
-        this.isValidCandidate = isValidCandidate;
-        this.isPossibleSolution = isPossibleSolution;
+    public SudokuResponse(int[][] currentMatrix, boolean isSolved, boolean isValid, boolean isPossibleValue) {
+        super(currentMatrix, isSolved);
+        this.isValid = isValid;
+        this.isPossibleValue = isPossibleValue;
     }
 
-    @JsonProperty("isValidCandidate")
-    public boolean isValidCandidate() {
-        return isValidCandidate;
+    @JsonProperty("isValid")
+    public boolean isValid() {
+        return isValid;
     }
 
-    @JsonProperty("isValidCandidate")
-    public void setValidCandidate(boolean validCandidate) {
-        isValidCandidate = validCandidate;
+    @JsonProperty("isValid")
+    public void setValidCandidate(boolean valid) {
+        isValid = valid;
     }
 
-    @JsonProperty("isPossibleSolution")
-    public boolean isPossibleSolution() {
-        return isPossibleSolution;
+    @JsonProperty("isPossibleValue")
+    public boolean isPossibleValue() {
+        return isPossibleValue;
     }
 
-    @JsonProperty("isPossibleSolution")
-    public void setPossibleSolution(boolean possibleSolution) {
-        isPossibleSolution = possibleSolution;
+    @JsonProperty("isPossibleValue")
+    public void setPossibleSolution(boolean possibleValue) {
+    	isPossibleValue = possibleValue;
     }
 
 }
