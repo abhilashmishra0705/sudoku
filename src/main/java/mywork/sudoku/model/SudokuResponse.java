@@ -6,28 +6,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 /**
  * Created by Abhilash on 03/05/2016.
  */
-@JsonPropertyOrder({ "currentMatrix", "isSolved", "isValid", "isPossibleValue" })
+@JsonPropertyOrder({ "currentMatrix", "isSolved", "isPossibleValue" })
 public class SudokuResponse extends BaseResponse {
 
     private boolean isValid;
     private boolean isPossibleValue;
 
-    public SudokuResponse(int[][] currentMatrix, boolean isSolved, boolean isValid, boolean isPossibleValue) {
+    public SudokuResponse(int[][] currentMatrix, boolean isSolved, boolean isPossibleValue) {
         super(currentMatrix, isSolved);
-        this.isValid = isValid;
         this.isPossibleValue = isPossibleValue;
     }
-
-    @JsonProperty("isValid")
-    public boolean isValid() {
-        return isValid;
-    }
-
-    @JsonProperty("isValid")
-    public void setValidCandidate(boolean valid) {
-        isValid = valid;
-    }
-
+    
     @JsonProperty("isPossibleValue")
     public boolean isPossibleValue() {
         return isPossibleValue;

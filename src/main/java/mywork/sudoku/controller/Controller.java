@@ -30,17 +30,16 @@ public class Controller {
 
 	@RequestMapping("/sudoku")
 	public BaseResponse sudoku(
-			@RequestParam(value = "val", required = false) Integer val,
 			@RequestParam(value = "row", required = false) Integer row,
-			@RequestParam(value = "col", required = false) Integer col) 
+			@RequestParam(value = "col", required = false) Integer col,
+			@RequestParam(value = "val", required = false) Integer val)
 	{
 
 		SudokuSolver solver = new SudokuSolver(sudokuMatrix);
 		Cell cell = new Cell(row,col);
 		if (val != null && row != null && col != null) {
-			boolean isValid = solver.isValid(cell,val);
 			boolean isPossibleValue = solver.setPossibleValue(cell,val);
-			return new SudokuResponse(solver.getMatrix(), solver.isSolved(), isValid, isPossibleValue);
+			return new SudokuResponse(solver.getMatrix(), solver.isSolved(), isPossibleValue);
 		}
 		return new BaseResponse(solver.getMatrix(), solver.isSolved());
 	}

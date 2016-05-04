@@ -4,8 +4,8 @@ import mywork.sudoku.model.Cell;
 
 public class SudokuSolver {
 
-	private static int matrix[][];
-	private static int solvedMatrix[][] = new int[9][9];
+	private int matrix[][];
+	private int solvedMatrix[][] = new int[9][9];
 
 	public SudokuSolver(int[][] matrix) {
 		this.matrix = matrix;
@@ -19,7 +19,6 @@ public class SudokuSolver {
 		if (!solve(new Cell(0, 0))) {
 			throw new RuntimeException("No possible solution!");
 		}
-		printMatrix(solvedMatrix);
 	}
 
 	public int[][] getMatrix() {
@@ -52,36 +51,31 @@ public class SudokuSolver {
 	 * @param Cell containing row and column
 	 * @return false if no values are found for this cell.
 	 */
-	static boolean solve(Cell cur) {
+	public boolean solve(Cell cur) {
 
 		if (cur == null)
 			return true;
 
 		// if matrix[cur] already has a value, there is nothing to solve here,
 		// continue on to next cell
-		if (matrix[cur.getRow()][cur.getCol()] != 0) {
+		if (solvedMatrix[cur.getRow()][cur.getCol()] != 0) {
 			return solve(getNextCell(cur));
 		}
-		
+
 		// if matrix[cur] doesn't have a value, try each value from 1 to 9
 		for (int i = 1; i <= 9; i++) {
-			boolean valid = isValid(cur, i);
-
-			if (!valid) 
-				continue;
-			solvedMatrix[cur.getRow()][cur.getCol()] = i; //set the valid value in the cell
-			boolean solved = solve(getNextCell(cur));
-			
-			// if solved, return true, else try other values
-			if (solved)
-				return true;
-			else
-				solvedMatrix[cur.getRow()][cur.getCol()] = 0; // reset
+			if (isValid(cur, i)){
+				solvedMatrix[cur.getRow()][cur.getCol()] = i; //set the valid value in the cell
+				// if solved, return true, else try other values
+				if (solve(getNextCell(cur)))
+					return true;
+			}
 		}
+		solvedMatrix[cur.getRow()][cur.getCol()] = 0;
 		return false;
 	}
 
-	public static Cell getNextCell(Cell cur) {
+	public Cell getNextCell(Cell cur) {
 
 		int row = cur.getRow();
 		int col = cur.getCol();
@@ -103,32 +97,25 @@ public class SudokuSolver {
 	/**
 	 * Check if a number for the given cell is valid as per the rules.
 	 */
-	
-	public static boolean isValid(Cell cell, int value) {
 
-		// if the value is present in the row, return false
-		for (int c = 0; c < 9; c++) {
-			if (solvedMatrix[cell.getRow()][c] == value)
-				return false;
+	public boolean isValid(Cell cell, int value) {
+
+		if (solvedMatrix[cell.getRow()][cell.getCol()] == value) {
+			return true;
 		}
 
-		// if the value is present in the column, return false
-		for (int r = 0; r < 9; r++) {
-			if (solvedMatrix[r][cell.getCol()] == value)
+		return isValid(cell.getRow(), cell.getCol(), value);
+	}
+	private boolean isValid(int row, int col, int value) {
+		int x = 3 * (row/ 3);
+		int y = 3 * (col/ 3);
+
+		for (int i = 0; i < 9; i++) {
+			if (solvedMatrix[row][i] == value || solvedMatrix[i][col] == value ||
+					solvedMatrix[x+(i%3)][y+(i/3)] == value) {
 				return false;
+			}
 		}
-
-		// if value is present in the region(3*3), return false
-		int x1 = 3 * (cell.getRow() / 3);
-		int y1 = 3 * (cell.getCol() / 3);
-		int x2 = x1 + 2;
-		int y2 = y1 + 2;
-
-		for (int x = x1; x <= x2; x++)
-			for (int y = y1; y <= y2; y++)
-				if (solvedMatrix[x][y] == value)
-					return false;
-
 		return true;
 	}
 
@@ -136,8 +123,6 @@ public class SudokuSolver {
 	 * Check if a number for the given cell is part of a possible Sudoku solution.
 	 */
 	public boolean setPossibleValue(Cell cur, int value) {
-
-		
 		if (solvedMatrix[cur.getRow()][cur.getCol()] == value) {
 			matrix[cur.getRow()][cur.getCol()] = value;
 			return true;
@@ -145,12 +130,4 @@ public class SudokuSolver {
 		return false;
 	}
 
-
-	public static void printMatrix(int matrix[][]) {
-		for (int row = 0; row < 9; row++) {
-			for (int col = 0; col < 9; col++)
-				System.out.print(matrix[row][col]);
-			System.out.println();
-		}
-	}
 }
